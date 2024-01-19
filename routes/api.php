@@ -1,19 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\ArtisanController;
+use App\Http\Controllers\MqttController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::post('/publish', [MqttController::class, 'publish']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'artisan'], function () {
+    Route::get('/key', [ArtisanController::class, 'key']);
+    Route::get('/seed', [ArtisanController::class, 'seed']);
+    Route::get('/fresh', [ArtisanController::class, 'fresh']);
+    Route::get('/cache', [ArtisanController::class, 'cache']);
+    Route::get('/storage', [ArtisanController::class, 'storage']);
+    Route::get('/optimize', [ArtisanController::class, 'optimize']);
 });
